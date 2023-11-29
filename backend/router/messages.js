@@ -13,7 +13,7 @@ const client = new DiscussServiceClient({
     authClient: new GoogleAuth().fromAPIKey(API_KEY),
 });
 
-router.post('/', async (req, res) => {
+router.post('/messages', async (req, res) => {
     let { author, message } = req.body;
 
     if (!author || !message) {
@@ -24,6 +24,13 @@ router.post('/', async (req, res) => {
     }
 
     const messages = await Message.find({});
+
+    if (messages.length > 1 && messages[messages.length - 1].author === author) {
+        res.status(400).json({
+            error: 'Cannot send two messages in a row'
+        });
+        return;
+    }
 
     messages.push({
         author,
@@ -39,7 +46,7 @@ router.post('/', async (req, res) => {
 
     const result = await client.generateMessage({
         model: MODEL_NAME, // Required. The model to use to generate the result.
-        temperature: 0.5, // Optional. Value `0.0` always uses the highest-probability result.
+        temperature: 1, // Optional. Value `0.0` always uses the highest-probability result.
         candidateCount: author, // Optional. The number of candidate results to generate.
         prompt: {
             // Required. Alternating prompt/response messages.
@@ -61,8 +68,9 @@ router.post('/', async (req, res) => {
     });
 });
 
-router.get('/', async (req, res) => {
+router.get('/messages', async (req, res) => {
     const messages = await Message.find({});
+    // await Message.deleteMany({});
 
     res.status(200).json({
         messages

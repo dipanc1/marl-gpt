@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const messagesRoute = require('./router/messages');
 
 const host = 'http://localhost';
-const port = 3000;
+const port = 5000;
 
 const app = express();
 
@@ -39,6 +39,9 @@ app.listen(port, () => {
 });
 
 
-app.use('/messages', messagesRoute);
+app.use('/api', messagesRoute);
+
+//*** Production Settings */
+app.use(express.static('./build'));
 
 

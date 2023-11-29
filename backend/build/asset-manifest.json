@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7eaa31ac.css",
+    "main.js": "/static/js/main.281931a9.js",
+    "static/media/dipan.jpg": "/static/media/dipan.16669da5f4d500e3c5dd.jpg",
+    "static/media/marl.jpg": "/static/media/marl.20f66ef588eb724f708c.jpg",
+    "static/media/logo.png": "/static/media/logo.a53bb82c3f9c459aa4dc.png",
+    "index.html": "/index.html",
+    "main.7eaa31ac.css.map": "/static/css/main.7eaa31ac.css.map",
+    "main.281931a9.js.map": "/static/js/main.281931a9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7eaa31ac.css",
+    "static/js/main.281931a9.js"
+  ]
+}
