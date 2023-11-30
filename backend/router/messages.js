@@ -69,7 +69,7 @@ router.post('/messages', async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            error: 'Internal server error'
+            error
         });
     }
 });
@@ -83,7 +83,7 @@ router.get('/messages', async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            error: 'Internal server error'
+            error
         });
     }
 });
@@ -97,7 +97,7 @@ router.delete('/messages', async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            error: 'Internal server error'
+            error
         });
     }
 });
