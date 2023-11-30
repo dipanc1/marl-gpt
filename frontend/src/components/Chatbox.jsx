@@ -1,13 +1,15 @@
 import { Avatar, Box, Button, Flex, HStack, Input, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
 import { Green200, Green400 } from '../utils/colors'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { API_URL, AUTHOR } from '../utils/constants'
+import { AppContext } from '../context/AppContext'
 
 const Chatbox = () => {
-    const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const { messages, dispatch } = useContext(AppContext)
 
     const AlwaysScrollToBottom = () => {
         const elementRef = useRef();
@@ -20,14 +22,14 @@ const Chatbox = () => {
         const getMessages = async () => {
             try {
                 const { data } = await axios.get(API_URL + '/messages')
-                setMessages(data.messages)
+                dispatch({ type: 'SET_MESSAGES', payload: data.messages })
             } catch (err) {
                 console.error(err.message)
             }
             setLoading(false)
         }
         getMessages()
-    }, [])
+    }, [dispatch])
 
     const sendMessage = async () => {
         setLoading(true)
@@ -37,7 +39,7 @@ const Chatbox = () => {
                 author: AUTHOR,
             })
 
-            setMessages(data.messages)
+            dispatch({ type: 'SET_MESSAGES', payload: data.messages })
             setMessage('')
         }
         catch (err) {
@@ -66,6 +68,7 @@ const Chatbox = () => {
                                     bg="black"
                                     color="white"
                                     minW="100px"
+                                    flexWrap={'wrap'}
                                     maxW="350px"
                                     my="1"
                                     p="3"
@@ -83,6 +86,7 @@ const Chatbox = () => {
                                 <Flex
                                     bg="gray.100"
                                     color="black"
+                                    flexWrap={'wrap'}
                                     minW="100px"
                                     borderRadius={'10px'}
                                     maxW="350px"

@@ -17,9 +17,24 @@ import logo from '../images/logo.png'
 import marl from '../images/marl.jpg'
 import dipan from '../images/dipan.jpg'
 import { Green50, Green900 } from '../utils/colors'
+import axios from 'axios'
+import { API_URL } from '../utils/constants'
+import { useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const Nav = () => {
     const { colorMode, toggleColorMode } = useColorMode()
+    const { dispatch } = useContext(AppContext)
+
+
+    const handleClear = async () => {
+        try {
+            await axios.delete(API_URL + '/messages')
+            dispatch({ type: 'SET_MESSAGES', payload: [] })
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
 
 
     return (
@@ -28,16 +43,19 @@ const Nav = () => {
                 <Flex h={'70px'} alignItems={'center'} justifyContent={'space-between'}>
                     <Box>
                         <Image src={logo} alt={'logo'} width={'200px'}
-                        style={{
-                            filter: colorMode === 'light' ? 'invert(0)' : 'invert(1)',
-                        
-                        }}/>
+                            style={{
+                                filter: colorMode === 'light' ? 'invert(0)' : 'invert(1)',
+
+                            }} />
                     </Box>
 
                     <Flex alignItems={'center'}>
                         <Stack direction={'row'} spacing={7}>
                             <Button onClick={toggleColorMode}>
                                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                            </Button>
+                            <Button onClick={handleClear}>
+                                Clear Chat
                             </Button>
 
                             <Menu>

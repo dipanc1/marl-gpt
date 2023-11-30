@@ -2,10 +2,10 @@ import { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
 
 const INITIAL_STATE = {
-    user: null
+    messages: []
 };
 
-const AppContext = createContext(INITIAL_STATE);
+export const AppContext = createContext(INITIAL_STATE);
 
 export const AppContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, INITIAL_STATE);
@@ -13,7 +13,7 @@ export const AppContextProvider = ({ children }) => {
     return (
         <AppContext.Provider value={
             {
-                user: state.user,
+                messages: state.messages,
                 dispatch
             }
         }>
